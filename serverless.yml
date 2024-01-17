@@ -1,0 +1,31 @@
+service: aws-node-http-api-project
+frameworkVersion: '3'
+
+plugins:
+  - serverless-offline
+
+custom:
+  allowed-headers:
+    - Content-Type
+    - X-Amz-Date
+    - Authorization
+    - X-Api-Key
+    - X-Amz-Security-Token
+    - X-Amz-User-Agent
+    - x-tollguru-token
+  cors:
+    origin: "*"
+    headers: ${self:custom.allowed-headers}
+    allowCredentials: true
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+functions:
+  api:
+    handler: index.handler
+    events:
+      - httpApi:
+          path: /
+          method: get
